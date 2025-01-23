@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="/images/logo_transp.png" alt="SafeGuardianAI Logo" class="nav-logo">
+            <a href="/">SafeGuardianAI</a>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="<%= active === 'home' ? 'active' : '' %>">Home</a>
+            <a href="/technology" class="<%= active === 'technology' ? 'active' : '' %>">Technology</a>
+            <a href="/investors" class="<%= active === 'investors' ? 'active' : '' %>">Investors</a>
+            <a href="/contact" class="<%= active === 'contact' ? 'active' : '' %>">Contact</a>
+        </div>
+    </nav>
+
+    <main>
+        <%- body %>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SafeGuardianAI</h3>
+                <p>AI-Powered Emergency Response Solutions</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: contact@safeguardian.ai</p>
+                <p>Phone: +1 (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SafeGuardianAI. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+</html> 
