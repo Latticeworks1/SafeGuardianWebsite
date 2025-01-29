@@ -3,7 +3,7 @@ const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3000;
 
 // Set EJS as templating engine
 app.set('view engine', 'ejs');
@@ -40,6 +40,13 @@ app.get('/contact', (req, res) => {
   res.render('contact', {
     title: 'Contact Us - SafeGuardianAI',
     active: 'contact'
+  });
+});
+
+app.get('/team', (req, res) => {
+  res.render('team', {
+    title: 'Our Team - SafeGuardianAI',
+    active: 'team'
   });
 });
 

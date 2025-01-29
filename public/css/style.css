@@ -351,35 +351,45 @@ footer {
     background-color: var(--dark);
 }
 
-.demo-video {
+.demo-container {
+    width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    aspect-ratio: 16/9;
-    background-color: rgba(230, 57, 70, 0.1);
-    border-radius: 10px;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
     overflow: hidden;
 }
 
-.video-placeholder {
+.demo-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--white);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.video-placeholder:hover {
-    background-color: rgba(230, 57, 70, 0.2);
+.demo-fallback {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
-.video-placeholder i {
-    font-size: 4rem;
-    color: var(--primary-red);
+.demo-fallback i {
+    font-size: 2rem;
+    color: #666;
     margin-bottom: 1rem;
+}
+
+/* Show fallback when vue-frame fails to load */
+.demo-frame:not(:defined) + .demo-fallback {
+    display: block;
 }
 
 /* Feature Image Styles */
@@ -525,5 +535,191 @@ footer {
     }
     100% {
         color: #D4AF37;
+    }
+}
+
+.video-background {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+}
+
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translateX(-50%) translateY(-50%);
+    object-fit: cover;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+}
+
+/* Team Section Styles */
+.team-section {
+    padding: 4rem 5%;
+    background-color: var(--white);
+}
+
+.team-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    color: var(--dark);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.team-member {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+}
+
+.team-member h3 {
+    color: var(--primary-red);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.member-title {
+    color: var(--dark);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.member-bio {
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.member-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-red);
+    text-decoration: none;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.member-link:hover {
+    color: #c1121f;
+}
+
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-member {
+        margin: 1rem 0;
+    }
+}
+
+/* PDF Reader Styles */
+.pdf-reader-section {
+    padding: 4rem 5%;
+    background-color: var(--white);
+}
+
+.pdf-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 800px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-viewer {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.pdf-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.pdf-header h2 {
+    font-size: 2.5rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+}
+
+.pdf-header p {
+    color: var(--gray);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Video Demo Section Styles */
+.video-demo-section {
+    padding: 0;
+    background-color: var(--white);
+}
+
+.video-demo-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.video-demo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: contain;
+    filter: brightness(1.2) contrast(1.1);
+}
+
+/* Custom video controls styling */
+.video-demo::-webkit-media-controls {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.video-demo::-webkit-media-controls-panel {
+    padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+    .video-demo-container {
+        height: auto;
     }
 } 
