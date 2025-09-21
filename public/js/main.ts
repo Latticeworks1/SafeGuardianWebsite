@@ -70,17 +70,16 @@ class SafeGuardianApp {
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate');
           if (entry.target.classList.contains('metrics')) {
             this.animateNumbers();
           }
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.5 });
   }
 
   private observeElements(): void {
-    document.querySelectorAll('.feature, .tech-card, .metric-card').forEach(el => {
+    document.querySelectorAll('.metric-card').forEach(el => {
       this.observer.observe(el);
     });
   }
