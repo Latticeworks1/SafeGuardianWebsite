@@ -10,13 +10,20 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'public/js/main.ts'),
+        style: resolve(__dirname, 'public/css/style.css'),
       },
       output: {
         entryFileNames: 'js/[name].[hash].js',
         chunkFileNames: 'js/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]'
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'css/[name].[hash].[ext]';
+          }
+          return 'assets/[name].[hash].[ext]';
+        }
       }
-    }
+    },
+    copyPublicDir: true
   },
   server: {
     proxy: {

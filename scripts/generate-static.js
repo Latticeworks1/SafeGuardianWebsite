@@ -18,6 +18,50 @@ class StaticGenerator {
     this.app.set('layout', 'layouts/main');
   }
 
+  async copyPublicAssets() {
+    const publicPath = path.join(__dirname, '../public');
+    
+    // Copy CSS
+    try {
+      const cssSource = path.join(publicPath, 'css');
+      const cssTarget = path.join(this.distPath, 'css');
+      await fs.mkdir(cssTarget, { recursive: true });
+      
+      const cssFiles = await fs.readdir(cssSource);
+      for (const file of cssFiles) {
+        await fs.copyFile(
+          path.join(cssSource, file),
+          path.join(cssTarget, file)
+        );
+      }
+      console.log('✓ Copied CSS files');
+    } catch (err) {
+      console.warn('Could not copy CSS:', err.message);
+    }
+
+    // Copy images, videos, pdf
+    const assetDirs = ['images', 'videos', 'pdf'];
+    for (const dir of assetDirs) {
+      try {
+        const source = path.join(publicPath, dir);
+        const target = path.join(this.distPath, dir);
+        
+        await fs.mkdir(target, { recursive: true });
+        const files = await fs.readdir(source);
+        
+        for (const file of files) {
+          await fs.copyFile(
+            path.join(source, file),
+            path.join(target, file)
+          );
+        }
+        console.log(`✓ Copied ${dir} files`);
+      } catch (err) {
+        console.warn(`Could not copy ${dir}:`, err.message);
+      }
+    }
+  }
+
   async generatePage(route, data) {
     return new Promise((resolve, reject) => {
       this.app.render(route, data, (err, html) => {
@@ -28,6 +72,9 @@ class StaticGenerator {
   }
 
   async generateStaticSite() {
+    // First copy all public assets
+    await this.copyPublicAssets();
+    
     const routes = [
       { path: 'index.html', template: 'home', data: { title: 'SafeGuardianAI - AI-Powered Emergency Response', active: 'home' }},
       { path: 'technology.html', template: 'technology', data: { title: 'How SafeGuardianAI\'s Technology Works', active: 'technology' }},
@@ -49,7 +96,6 @@ class StaticGenerator {
       }
     }
 
-    // Copy public assets (already handled by Vite build)
     console.log('✓ Static site generation complete');
   }
 }
