@@ -1,8 +1,20 @@
 :root {
-    --primary-red: #e63946;
-    --dark: #1d1d1d;
-    --white: #f8f9fa;
-    --gray: #6c757d;
+    --primary: #0066ff;
+    --primary-dark: #0052cc;
+    --primary-light: #3385ff;
+    --accent: #00d4aa;
+    --dark: #0a0a0a;
+    --surface: #ffffff;
+    --surface-variant: #f8fafc;
+    --surface-dark: #1e293b;
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border: #e2e8f0;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-strong: rgba(0, 0, 0, 0.25);
+    --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-light));
+    --gradient-accent: linear-gradient(135deg, var(--accent), #00b894);
+    --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 * {
@@ -11,17 +23,23 @@
     box-sizing: border-box;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     line-height: 1.6;
-    color: var(--dark);
-    background-color: var(--white);
+    color: var(--text-primary);
+    background: var(--surface);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 /* Navbar Styles */
 .navbar {
-    background-color: #000000;
-    padding: 1.5rem 5%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,7 +47,7 @@ body {
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
 .nav-brand {
@@ -52,67 +70,155 @@ body {
 }
 
 .nav-brand a {
-    color: var(--white);
+    color: var(--text-primary);
     text-decoration: none;
-    font-size: 1.7rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 700;
     white-space: nowrap;
-    letter-spacing: 0.5px;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
 }
 
 .nav-links a {
-    color: var(--white);
+    color: var(--text-secondary);
     text-decoration: none;
-    margin-left: 2rem;
-    transition: color 0.3s ease;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.nav-links a:hover, .nav-links a.active {
-    color: var(--primary-red);
+.nav-links a:hover {
+    color: var(--primary);
+    background: rgba(0, 102, 255, 0.1);
+}
+
+.nav-links a.active {
+    color: var(--primary);
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
 }
 
 /* Main Content Styles */
 main {
-    margin-top: 90px;
-    min-height: calc(100vh - 90px - 300px);
+    margin-top: 80px;
 }
 
 .hero {
-    background-image: linear-gradient(rgba(231, 0, 0, 1), rgba(255, 255, 255, 0)), 
-                      url('/images/UI_map.png');
-    background-size: 130%;
-    background-position: center;
-    background-attachment: fixed;
-    min-height: 1000px;
+    position: relative;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 1rem;
+    padding: 0 2rem;
+    background: var(--gradient-hero);
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/SafeGuardianWebsite/images/UI_map.png') center/cover;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    animation: fadeInUp 1s ease-out;
 }
 
 .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: white;
+    letter-spacing: -1px;
+    line-height: 1.1;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2.5rem;
+    font-weight: 400;
     margin-bottom: 2rem;
 }
 
+/* Modern CTA Button */
 .cta-button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 1rem 2rem;
-    background-color: var(--primary-red);
-    color: var(--white);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.cta-button:hover::before {
+    left: 100%;
 }
 
 .cta-button:hover {
-    background-color: #c1121f;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button i {
+    transition: transform 0.3s ease;
+}
+
+.cta-button:hover i {
+    transform: translateX(4px);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Footer Styles */
@@ -153,40 +259,98 @@ footer {
 
 /* Features Section Styles */
 .features {
-    padding: 4rem 5%;
+    padding: 6rem 5%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    background-color: var(--white);
-    margin-top: 0;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 3rem;
+    background: linear-gradient(135deg, var(--surface-variant) 0%, var(--surface) 100%);
+    position: relative;
+}
+
+.features::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
 }
 
 .feature {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 3rem 2rem;
     text-align: center;
-    padding: 2rem;
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-    background-color: var(--white);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.feature:hover::before {
+    opacity: 0.03;
 }
 
 .feature:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px var(--shadow);
+    border-color: var(--primary-light);
 }
 
-.feature i {
-    font-size: 3rem;
-    color: var(--primary-red);
-    margin-bottom: 1rem;
+.feature-icon {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-primary);
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-icon i {
+    font-size: 2rem;
+    color: white;
 }
 
 .feature h2 {
-    color: var(--dark);
+    position: relative;
+    z-index: 2;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
     margin-bottom: 1rem;
+    letter-spacing: -0.5px;
 }
 
 .feature p {
-    color: var(--gray);
+    position: relative;
+    z-index: 2;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
 }
 
 /* Technology Page Styles */
