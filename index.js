@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.get('/technology', (req, res) => {
   res.render('technology', {
-    title: 'Our Technology - SafeGuardianAI',
+    title: 'How SafeGuardianAI\'s Technology Works',
     active: 'technology'
   });
 });

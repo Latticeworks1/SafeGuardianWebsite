@@ -44,4 +44,19 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.feature, .tech-card, .metric-card').forEach(el => {
     observer.observe(el);
-}); 
+});
+
+// Contact Form Submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const confirmation = document.getElementById('form-confirmation');
+        confirmation.style.display = 'block';
+        confirmation.textContent = 'Thank you for your message! We will get back to you shortly.';
+        contactForm.reset();
+        setTimeout(() => {
+            confirmation.style.display = 'none';
+        }, 5000);
+    });
+} 

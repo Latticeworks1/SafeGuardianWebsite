@@ -5,8 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "build": "node index.js"
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "nodemon --exec ts-node src/server.ts",
+    "dev:legacy": "nodemon index.js",
+    "dev:client": "vite",
+    "build": "vite build",
+    "build:static": "vite build && node scripts/generate-static.js",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "deploy": "npm run build:static && gh-pages -d dist"
   },
   "author": "Sinan Robillard",
   "license": "MIT",
@@ -22,7 +32,21 @@
     "vueframe": "^1.0.16"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.3",
+    "@types/express-ejs-layouts": "^2.5.4",
+    "@types/node": "^24.5.2",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "@vitejs/plugin-legacy": "^7.2.1",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.36.0",
+    "gh-pages": "^6.3.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.6"
   },
   "engines": {
     "node": ">=14.0.0"
