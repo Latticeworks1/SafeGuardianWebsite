@@ -1,21 +1,20 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
-const expressLayouts = require('express-ejs-layouts');
+const ejs = require('ejs');
 
 // Static site generator for GitHub Pages
 class StaticGenerator {
   constructor() {
     this.app = express();
     this.distPath = path.join(__dirname, '../dist');
+    this.viewsPath = path.join(__dirname, '../views');
     this.setupApp();
   }
 
   setupApp() {
     this.app.set('view engine', 'ejs');
-    this.app.set('views', path.join(__dirname, '../views'));
-    this.app.use(expressLayouts);
-    this.app.set('layout', 'layouts/main');
+    this.app.set('views', this.viewsPath);
   }
 
   async copyPublicAssets() {
@@ -63,12 +62,28 @@ class StaticGenerator {
   }
 
   async generatePage(route, data) {
-    return new Promise((resolve, reject) => {
-      this.app.render(route, data, (err, html) => {
-        if (err) reject(err);
-        else resolve(html);
+    try {
+      // Read the layout template
+      const layoutPath = path.join(this.viewsPath, 'layouts/main.ejs');
+      const layoutTemplate = await fs.readFile(layoutPath, 'utf8');
+      
+      // Read the page template
+      const pagePath = path.join(this.viewsPath, `${route}.ejs`);
+      const pageTemplate = await fs.readFile(pagePath, 'utf8');
+      
+      // Render the page content
+      const pageContent = ejs.render(pageTemplate, data);
+      
+      // Render the full layout with the page content
+      const html = ejs.render(layoutTemplate, {
+        ...data,
+        body: pageContent
       });
-    });
+      
+      return html;
+    } catch (error) {
+      throw new Error(`Failed to generate ${route}: ${error.message}`);
+    }
   }
 
   async generateStaticSite() {
